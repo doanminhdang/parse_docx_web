@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+        <title>Bóc tách dữ liệu ở tập tin DOCX thành CSV từ điển</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+</head>
+<h1>Bóc tách dữ liệu ở tập tin DOCX thành CSV từ điển</h1>
+<h2>Công dụng:</h2>
+Chương trình này giúp phân tích một file DOCX, ví dụ nội dung một từ điển.<br />
+Người dùng cho biết bố cục từ điển: tiếng Đức có định dạng gì, tiếng Anh định dạng gì, khi nào thì kết thúc một mục từ.<br />
+Chương trình bóc tách từ file DOCX để ra các cặp nội dung tiếng Đức và tiếng Anh tương ứng, rồi xuất ra file CSV song ngữ (mở được bằng Excel, dùng được trong CAT).<br />
+<br />
+
+<h2>Hướng dẫn:</h2>
+&nbsp;&nbsp;+ Chọn file văn bản .DOCX để upload.<br />
+&nbsp;&nbsp;+ Chọn ngôn ngữ nguồn, ngôn ngữ đích, cùng định dạng của chúng trong văn bản. <br />
+&nbsp;&nbsp;+ Chọn điều kiện kết thúc một mục từ. <br />
+<br />
+<form action="../cgi-bin/parse_docx_processing.py" method="post" enctype="multipart/form-data">
+IMPORTANT: Bạn có muốn XÓA các file tải lên sau khi xử lý xong? (kết quả vẫn sẽ được lưu trên trang web này)<br />
+<input type="radio" name="delete_data" value="yes" /> (default) Có
+<input type="radio" name="delete_data" value="no" /> Không
+<br />
+<h3>DOCX file: <input type="file" name="upload1" />
+<br />
+Ngôn ngữ nguồn: <select name="language1">
+<option value="de" selected>de - tiếng Đức</option>
+<option value="en">en - tiếng Anh</option>
+<option value="fr">fr - tiếng Pháp</option>
+<option value="vi">vi - tiếng Việt</option>
+</select>
+<br />
+</h3>
+Định dạng ứng với ngôn ngữ nguồn: <b>đậm</b> hay không? <select name="language1_bold" />
+<option value="1" selected>bold (in đậm)</option>
+<option value="0">not bold (không đậm)</option>
+<option value="-1">either bold or not (đậm hoặc không)</option>
+</select> &nbsp; <i>nghiêng</i> hay không? <select name="language1_italic" />
+<option value="1">italic (in nghiêng)</option>
+<option value="0">not italic (không nghiêng)</option>
+<option value="-1" selected>either italic or not (nghiêng hoặc không)</option>
+</select>
+<br />
+<h3>
+Ngôn ngữ đích: <select name="language2">
+<option value="de">de - tiếng Đức</option>
+<option value="en" selected>en - tiếng Anh</option>
+<option value="fr">fr - tiếng Pháp</option>
+<option value="vi">vi - tiếng Việt</option>
+</select>
+<br />
+</h3>
+Định dạng ứng với ngôn ngữ đích: <b>đậm</b> hay không? <select name="language2_bold" />
+<option value="1">bold (in đậm)</option>
+<option value="0" selected>not bold (không đậm)</option>
+<option value="-1">either bold or not (đậm hoặc không)</option>
+</select> &nbsp; <i>nghiêng</i> hay không? <select name="language2_italic" />
+<option value="1">italic (in nghiêng)</option>
+<option value="0">not italic (không nghiêng)</option>
+<option value="-1" selected>either italic or not (nghiêng hoặc không)</option>
+</select>
+<br />
+<h3>Điều kiện kết thúc một mục từ:</h3>
+<input type="checkbox" name="eoi_eol" value="eol">End-of-line ⏎ (xuống dòng) &nbsp; 
+<input type="checkbox" name="eoi_bold_to_unbold" value="bold_to_unbold">bold->not bold (hết đậm) &nbsp; 
+<input type="checkbox" name="eoi_unbold_to_bold" value="unbold_to_bold" checked>not bold-> bold (bắt đầu đậm) &nbsp; 
+<input type="checkbox" name="eoi_italic_to_unitalic" value="italic_to_unitalic">italic->not italic (hết nghiêng) &nbsp; 
+<input type="checkbox" name="eoi_unitalic_to_italic" value="unitalic_to_italic">not italic-> italic (bắt đầu nghiêng)
+
+
+<h3><input type="submit" value="Submit info"/></form></h3>
+<!-- Run from Linux terminal in the folder containing cgi-bin:
+python3 -m http.server --bind localhost --cgi 8000
+or with Python2:
+python -m CGIHTTPServer 8000 .
+Then access this web page on localhost:8000
+ -->
