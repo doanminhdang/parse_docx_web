@@ -221,59 +221,6 @@ def re_parse(word_texts, word_format_bolds, word_format_italics):
 # encoding=utf8 by default
 # See: https://stackoverflow.com/questions/21129020/how-to-fix-unicodedecodeerror-ascii-codec-cant-decode-byte
 
-## Tests:
-##import docx
-##inputFile = 'abc.docx'
-##doc = docx.Document(inputFile)
-##line = doc.paragraphs[2]
-##line = doc.paragraphs[16]
-##line = doc.paragraphs[19]
-##line = doc.paragraphs[25]
-#
-#line = doc.paragraphs[7]
-#print line.text
-#for phrase in line.runs:
-  #print(phrase.text)
-  #print(line.style.name)
-  #print(line.style.font.bold)
-  #print(line.style.font.italic)
-  #print(phrase.style.name)
-  #print(phrase.style.font.name)
-  #print(phrase.style.font.bold)
-  #print(phrase.style.font.italic)
-#
-#paragraph_style_bold = line.style.font.bold
-#paragraph_style_italic = line.style.font.italic
-#word_texts = [part.text.strip() for part in line.runs if part.text.strip() != '']
-#word_style_names = [part.style.name for part in line.runs if part.text.strip() != '']
-#word_style_bolds = [part.style.font.bold for part in line.runs if part.text.strip() != '']
-#word_style_italics = [part.style.font.italic for part in line.runs if part.text.strip() != '']
-#word_format_bolds, word_format_italics = read_format(word_style_bolds, word_style_italics, paragraph_style_bold, paragraph_style_italic)
-#
-#for k in range(len(word_style_names)):
-#    print(word_texts[k])
-#    print(paragraph_style_bold)
-#    print(paragraph_style_italic)
-#    print(word_style_names[k])
-#    print(word_format_bolds[k])
-#    print(word_format_italics[k])
-#
-#newword_texts, newwordcase_capitals, newword_format_bolds, newword_format_italics = re_parse(word_texts, word_format_bolds, word_format_italics)
-#
-#for k in range(len(newword_texts)):
-#    print(newword_texts[k])
-#    print(newwordcase_capitals[k])
-#    print(newword_format_bolds[k])
-#    print(newword_format_italics[k])
-#
-#de_word, type_word, field_word, en_word, vi_word, out_message = analyze_line(newword_texts, newwordcase_capitals, newword_format_bolds, newword_format_italics)
-#
-#print(de_word)
-#print(type_word)
-#print(field_word)
-#print(en_word)
-#print(vi_word)
-
 def read_docx(inputFile, exportFile = 'result.csv', logFile = 'log.txt'):
 
     extract_words = []

@@ -44,6 +44,7 @@ from sys import path
 path.append(TOP_DIR+'/'+MODULE_DIR)
 
 import parse_docx
+import Csv_Excel
 
 def create_user_dir(base_dir):
     """Create directory for the request, with the structure
@@ -164,8 +165,11 @@ file_input_1 = save_uploaded_file(form, "upload1", os.path.join(TOP_DIR, DATA_DI
 
 if file_input_1:
     file_1_path = os.path.join(ABS_TOP_DIR, DATA_DIR, relative_user_dir, UPLOAD_DIR, file_input_1)
-    outfile_path = os.path.join(ABS_TOP_DIR, DATA_DIR, relative_user_dir, OUTPUT_DIR, file_input_1+'.csv')
+    csv_file_path = os.path.join(ABS_TOP_DIR, DATA_DIR, relative_user_dir, OUTPUT_DIR, file_input_1 + '.csv')
+    xls_file_path = os.path.join(ABS_TOP_DIR, DATA_DIR, relative_user_dir, OUTPUT_DIR, file_input_1 + '.xls')
     url_file_1 = BASE_URL+'/'+DATA_DIR+'/'+relative_user_dir+'/'+UPLOAD_DIR+'/'+file_input_1
+    url_file_csv = BASE_URL+'/'+DATA_DIR+'/'+relative_user_dir+'/'+UPLOAD_DIR+'/'+file_input_1 + '.csv'
+    url_file_xls = BASE_URL+'/'+DATA_DIR+'/'+relative_user_dir+'/'+UPLOAD_DIR+'/'+file_input_1 + '.xls'
     message_file_1 = 'File 1: '+file_input_1+' was uploaded successfully.'
 else:
     message_file_1 = 'File 1 is not an accepted file. It was not uploaded.'
@@ -178,16 +182,17 @@ if proceed_flag:
     kwargs = {'group1_condition':{'bold':language1_bold, 'italic':language1_italic}, 'group2_condition':{'bold':language2_bold, 'italic':language2_italic}, 'eoi_eol':eoi_eol, 'eoi_bold_to_unbold':eoi_bold_to_unbold, 'eoi_unbold_to_bold':eoi_unbold_to_bold, 'eoi_italic_to_unitalic':eoi_italic_to_unitalic, 'eoi_unitalic_to_italic':eoi_unitalic_to_italic}
     
     # Parsing the DOCX file
-    parse_docx.docx_to_csv(file_1_path, outfile_path, **kwargs)
+    parse_docx.docx_to_csv(file_1_path, csv_file_path, **kwargs)
     
     # Add the header line to the CSV file, quick and dirty with delimiter='\t'
     csv_header = language1 + '\t' + language2 + '\n'
-    with open(outfile_path, 'rt') as csv_file:
+    with open(csv_file_path, 'rt') as csv_file:
         old_csv_text = csv_file.read()
-    with open(outfile_path, 'wt') as csv_file:
+    with open(csv_file_path, 'wt') as csv_file:
         csv_file.write(csv_header + old_csv_text)
-
-    url_file_result = BASE_URL+'/'+DATA_DIR+'/'+relative_user_dir+'/'+OUTPUT_DIR+'/'+file_input_1+'.csv'
+    
+    # Convert CSV to XLS for user to open in Excel
+    Csv_Excel.csv_to_xls(csv_file_path, xls_file_path)
 
 # Clean up
 if not delete_data != 'yes':
@@ -207,8 +212,8 @@ print "<h2>%s</h2>" % (message_file_1)
 if delete_data != 'yes' and file_input_1:
     print "<h2>Link to the uploaded DOCX file: <a href=\"%s\">%s</a></h2>" % (url_file_1, url_file_1)
 if proceed_flag:
-    print "<h2>Link to the result CSV file: <a href=\"%s\">%s</a></h2>" % (url_file_result, url_file_result)
-
+    print "<h2>Link to the result CSV file: <a href=\"%s\">%s</a></h2>" % (url_file_csv, url_file_csv)
+    print "<h2>Result converted to XLS file: <a href=\"%s\">%s</a></h2>" % (url_file_xls, url_file_xls)
 if not delete_data != 'yes':
     print "<h2>Data (except the result files) was deleted on the server.</h2>"
 print "</body>"
