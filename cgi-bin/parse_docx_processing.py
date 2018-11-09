@@ -168,8 +168,8 @@ if file_input_1:
     csv_file_path = os.path.join(ABS_TOP_DIR, DATA_DIR, relative_user_dir, OUTPUT_DIR, file_input_1 + '.csv')
     xls_file_path = os.path.join(ABS_TOP_DIR, DATA_DIR, relative_user_dir, OUTPUT_DIR, file_input_1 + '.xls')
     url_file_1 = BASE_URL+'/'+DATA_DIR+'/'+relative_user_dir+'/'+UPLOAD_DIR+'/'+file_input_1
-    url_file_csv = BASE_URL+'/'+DATA_DIR+'/'+relative_user_dir+'/'+UPLOAD_DIR+'/'+file_input_1 + '.csv'
-    url_file_xls = BASE_URL+'/'+DATA_DIR+'/'+relative_user_dir+'/'+UPLOAD_DIR+'/'+file_input_1 + '.xls'
+    url_file_csv = BASE_URL+'/'+DATA_DIR+'/'+relative_user_dir+'/'+OUTPUT_DIR+'/'+file_input_1 + '.csv'
+    url_file_xls = BASE_URL+'/'+DATA_DIR+'/'+relative_user_dir+'/'+OUTPUT_DIR+'/'+file_input_1 + '.xls'
     message_file_1 = 'File 1: '+file_input_1+' was uploaded successfully.'
 else:
     message_file_1 = 'File 1 is not an accepted file. It was not uploaded.'
